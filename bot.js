@@ -37,7 +37,6 @@ const makeGame = (state, msg) => {
 }
 
 const processTurn = async (state, msg) => {
-    console.log(msg.content, state.word);
     if(msg.content == state.word) {
         return await msg.channel.send(mention(msg.author) + ' got ' + state.word + ' correctly!')
             .then(() => makeGame(state, msg))
@@ -110,7 +109,6 @@ client.on('message', async (msg) => {
   switch(msg.content) {
       case('!new-game'): 
           state = await newGame(state, msg);
-          console.log(state);
           break;
       case('!end-game'):
           state = endGame(state, msg);
@@ -119,7 +117,6 @@ client.on('message', async (msg) => {
           state = startGame(state, msg);
           break;
   }
-  console.log(state.playing);
   if(state.playing == PLAYING){
       state = await processTurn(state, msg);
   }
